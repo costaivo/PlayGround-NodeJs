@@ -10,24 +10,50 @@ const _addVoicesList = voices => {
     } (${voice.lang})</option>`;
   });
   list.innerHTML = html;
-  window.document.body.appendChild(list);
+  window.document.getElementById('mainHeader').appendChild(list);
 };
 
 const _wordsToSpell = [
     'rat',
     'bat',
+    'tap',
+    'noticeable',
     'population',
-    'gentleman',
-    'physician',
-    'earthquake',
-    'appreciation',
-    'permission',
     'imagination',
-    'noticable'
+    'gentleman',
+    'invitation',
+    'abundant',
+    'permission',
+    'scratch',
+    'curriculum',
+    'synthetic',
+    'catalogue',
+    'surrender',
+    'physician',
+    'whistling',
+    'doubtful',
+    'laughter',
+    'ascending',
+    'foreign',
+    'earthquake',
+    'government',
+    'scholarship',
+    'mysterious',
+    'announcement',
+    'environment',
+    'appreciation',
+    'expenditure',
+    'interrogation',
+    'catastrophe',
+    'perseverance',
+    'received'
 ];
 
 let scoreCount =0;
 let wordIndex=0;
+let totalIncorrectAttempts=0;
+let currentIncorrectAttempts=0;
+
 function _init() {
   const speech = new Speech();
   speech
@@ -65,12 +91,17 @@ function _prepareSpeakButton(speech) {
   const startTrainingButton = document.getElementById("startMyTraining");
   const submitAnswerButton=document.getElementById("submitAnswer");
   const inputAnswer=document.getElementById("inputAnswer");
-
+const mainHeader=document.getElementById("mainHeader");
+const trainingArena=document.getElementById("trainingArena");
   const textarea = document.getElementById("text");
   const languages = document.getElementById("languages");
 
+  const scoreLabel = document.getElementById("scoreCounter");
+
+  const incorrectAttempts = document.getElementById("wrongAttempts");
+  const currentWrongAttempts = document.getElementById("currentWrongAttempts");
+  
   let currentWordToSpell = "cat";
-  submitAnswer.disabled=true;
 
   speakButton.addEventListener("click", () => {
     const language = languages.value;
@@ -79,7 +110,7 @@ function _prepareSpeakButton(speech) {
     if (voice) speech.setVoice(voice);
     speech
       .speak({
-        text: textarea.value,
+        text: textarea.innerText,
         queue: false,
         listeners: {
           onstart: () => {
@@ -103,6 +134,8 @@ function _prepareSpeakButton(speech) {
       })
       .then(data => {
         console.log("Success !", data);
+        mainHeader.hidden=true;
+        trainingArena.classList.remove("d-none")
       })
       .catch(e => {
         console.error("An error occurred :", e);
@@ -118,15 +151,16 @@ function _prepareSpeakButton(speech) {
   });
 
   submitAnswerButton.addEventListener("click",()=>{
-    if(inputAnswer.value.toLowerCase()==currentWordToSpell.toLocaleLowerCase())
+    if(inputAnswer.value.toLowerCase()===currentWordToSpell.toLocaleLowerCase())
     {
         if(scoreCount % 2 === 0){
             console.log('odd score');
         speech
       .speak({
         text: "Very Good my Friend. Now for the next word",
-        queue:false})
-        setTimeout(2000,{})
+        queue:false});
+
+        setTimeout({},2000);
       }
       else{
         console.log('even score');
@@ -135,10 +169,19 @@ function _prepareSpeakButton(speech) {
           text: "Great Going buddy. Your current score is :"+scoreCount+"points. Next word coming up",
           queue:false})
       }
-        scoreCount++;
+      var currentMarks = (currentIncorrectAttempts*-1)+10;
+
+      if(currentMarks>0)
+        scoreCount += currentMarks;
+      else
+        scoreCount +=1;
+
+        scoreLabel.innerText=scoreCount;
         setNextWord();
     }
     else{
+      currentIncorrectAttempts++;
+      currentWrongAttempts.innerText = currentIncorrectAttempts;
         speech
         .speak({
           text: "Sorry That was an Incorrect Answer. Try Again!",
@@ -150,8 +193,23 @@ function _prepareSpeakButton(speech) {
   });
 
   function setNextWord(){
+
+    if(currentIncorrectAttempts>0)
+    {
+      totalIncorrectAttempts++;
+      incorrectAttempts= totalIncorrectAttempts;
+    }
+    currentIncorrectAttempts=0;
     inputAnswer.value = "";
     inputAnswer.style.backgroundColor = "white";
+
+    if(totalIncorrectAttempts>3)
+    {
+      speech
+      .speak({
+        text: `Sorry! You have Exceeded all the lifelines. Your Final Score is ${scoreCount}. Please restart to try again.`,
+        queue:false})
+    }
       if(wordIndex>=_wordsToSpell.length)
       {
         speech
@@ -170,13 +228,16 @@ function _prepareSpeakButton(speech) {
     wordIndex++;
   };
   startTrainingButton.addEventListener("click",()=>{
+
+    submitAnswer.disabled=false;
     speech
       .speak({
         text: "Spell "+currentWordToSpell,
         queue: false,
         listeners: {
           onstart: () => {
-            submitAnswer.disabled=true;
+          
+            startTrainingButton.value ="Play Word";
             console.log("Start utterance");
           },
           onend: () => {
@@ -197,7 +258,6 @@ function _prepareSpeakButton(speech) {
       })
       .then(data => {
         console.log("Success !", data);
-        submitAnswer.disabled=false;
       })
       .catch(e => {
         console.error("An error occurred :", e);
