@@ -98,7 +98,7 @@ const trainingArena=document.getElementById("trainingArena");
 
   const scoreLabel = document.getElementById("scoreCounter");
 
-  const incorrectAttempts = document.getElementById("wrongAttempts");
+  const lblIncorrectAttempts = document.getElementById("wrongAttempts");
   const currentWrongAttempts = document.getElementById("currentWrongAttempts");
   
   let currentWordToSpell = "cat";
@@ -197,9 +197,10 @@ const trainingArena=document.getElementById("trainingArena");
     if(currentIncorrectAttempts>0)
     {
       totalIncorrectAttempts++;
-      incorrectAttempts= totalIncorrectAttempts;
+      lblIncorrectAttempts.innerText= totalIncorrectAttempts;
     }
     currentIncorrectAttempts=0;
+    currentWrongAttempts.innerText="0";
     inputAnswer.value = "";
     inputAnswer.style.backgroundColor = "white";
 
@@ -210,7 +211,7 @@ const trainingArena=document.getElementById("trainingArena");
         text: `Sorry! You have Exceeded all the lifelines. Your Final Score is ${scoreCount}. Please restart to try again.`,
         queue:false})
     }
-      if(wordIndex>=_wordsToSpell.length)
+    else  if(wordIndex>=_wordsToSpell.length)
       {
         speech
         .speak({
@@ -258,6 +259,7 @@ const trainingArena=document.getElementById("trainingArena");
       })
       .then(data => {
         console.log("Success !", data);
+        startTrainingButton.innerText = "Play Word";
       })
       .catch(e => {
         console.error("An error occurred :", e);
