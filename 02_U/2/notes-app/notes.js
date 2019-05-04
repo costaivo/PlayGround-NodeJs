@@ -5,12 +5,20 @@ const getNotes = function getNotes() {
 
 const addNote = function (title, body) {
     const notes = loadNotes();
-    console.log(`Existing notes:${notes}`)
+    const duplicateNotes = notes.filter(function (note) {
+        return note.title === title
+    })
+    if(duplicateNotes.length ===0){
     notes.push({
         title: title,
         body: body
     })
     saveNotes(notes)
+    console.log(`Added new note : '${title}'`)
+}
+else{
+    console.log(`Duplicate Note Found: '${title}' already exists`)
+}
 }
 const saveNotes = function (notes) {
     const dataJSON = JSON.stringify(notes)
