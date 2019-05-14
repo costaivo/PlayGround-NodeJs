@@ -18,3 +18,13 @@ Below are the few things we learned while developing the app
 - System Modules
 - Third Party Modules
 - Custom Modules
+
+
+## Debugging Nodes Applications
+Add the word debugger at the line where you need to inspect the code. 
+To run the application using debug mode use node inspect app.js
+Now open Chrome browser n browse to url chrome://inspect
+
+click on the remote target
+
+to restart the application type restart in the terminal
