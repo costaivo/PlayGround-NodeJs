@@ -61,3 +61,14 @@
 // })
 
 // console.log('Finished Running')
+
+const add =(num1,num2,callback)=>{
+setTimeout(()=>{
+    const sum = num1 + num2
+    callback(sum)
+})
+}
+
+add(1,4,(sum)=>{
+    console.log(sum)
+})
