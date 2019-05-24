@@ -1,12 +1,18 @@
 {
   "name": "web-server",
   "version": "0.0.1",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Costa Ivo",
-  "license": "MIT"
+  "license": "MIT",
+  "description": "",
+  "dependencies": {
+    "express": "^4.17.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.0"
+  }
 }
