@@ -16,7 +16,10 @@ const forecast = (latitude,longitude,callback) => {
             callback('Invalid coordinates',undefined)
         }
         else{
+            console.log(body)
             callback(undefined,{
+                forecast:body.daily.summary,
+                icon:body.daily.icon,
                 temperature: body.currently.temperature ,
                 cloudCover:body.currently.cloudCover*100 + ' %'
             })
