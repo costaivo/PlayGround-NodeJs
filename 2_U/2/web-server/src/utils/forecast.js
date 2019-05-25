@@ -18,8 +18,9 @@ const forecast = (latitude,longitude,callback) => {
         else{
             console.log(body)
             callback(undefined,{
-                forecast:body.daily.summary,
-                icon:body.daily.icon,
+                weeklyForecast:body.daily.summary,
+                todayForecast:body.currently.summary,
+                icon:body.currently.icon,
                 temperature: body.currently.temperature ,
                 cloudCover:body.currently.cloudCover*100 + ' %'
             })

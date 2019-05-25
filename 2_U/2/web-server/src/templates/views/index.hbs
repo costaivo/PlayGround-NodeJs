@@ -11,17 +11,24 @@
     <link rel="icon" href="/img/weather.png">
     <link rel="stylesheet"
           href="/css/style.css">
-    <script src="/js/app.js"></script>
+   
 </head>
 
 <body>
     <div class="main-content">
         {{>header}}
         <p>Use this site to get your weather!</p>
+
+        <form id="form"> 
+            <input type="text" placeholder="location">
+            <button>Search</button>
+        </form>
     </div>
 
 
     {{>footer}}
+
+     <script src="/js/app.js"></script>
 </body>
 
 </html>
