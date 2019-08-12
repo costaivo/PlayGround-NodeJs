@@ -198,6 +198,7 @@ const trainingArena=document.getElementById("trainingArena");
         .speak({
           text: "Great Going buddy. Your current score is :"+scoreCount+"points. Next word coming up",
           queue:false})
+          setTimeout({},2000);
       }
       var currentMarks = (currentIncorrectAttempts*-1)+10;
 
@@ -212,12 +213,25 @@ const trainingArena=document.getElementById("trainingArena");
     else{
       currentIncorrectAttempts++;
       currentWrongAttempts.innerText = currentIncorrectAttempts;
+
+      if(currentIncorrectAttempts<=2)
+      {
         speech
         .speak({
           text: "Sorry That was an Incorrect Answer. Try Again!",
           queue:false})
 
           inputAnswer.style.backgroundColor = "red";
+          inputAnswer.style.color="white";
+       }
+        else{
+          speech
+          .speak({
+            text: "Sorry! That was a wrong spelling. Try the next word now",
+            queue:false})
+            setTimeout(setNextWord,5000)
+        }
+
     }
 
   });
@@ -233,6 +247,7 @@ const trainingArena=document.getElementById("trainingArena");
     currentWrongAttempts.innerText="0";
     inputAnswer.value = "";
     inputAnswer.style.backgroundColor = "white";
+    inputAnswer.style.color="black"
 
     if(totalIncorrectAttempts>3)
     {
