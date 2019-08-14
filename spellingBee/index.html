@@ -40,6 +40,13 @@
                         margin: 10px;
 
                 }
+
+                button:disabled,
+                button[disabled] {
+                        border: 1px solid #999999;
+                        background-color: #cccccc;
+                        color: #666666;
+                }
         </style>
 </head>
 
@@ -86,7 +93,8 @@
                      aria-valuemax="100"></div>
         </div>
 
-        <div class="alert alert-success d-none" id="msgAllGood"
+        <div class="alert alert-success d-none"
+             id="msgAllGood"
              role="alert">
                 <h4 class="alert-heading">Well done!</h4>
                 <p>You Completed your Training Successfully Today!! With a clean Slate</p>
@@ -94,13 +102,14 @@
                 <p class="mb-0">You can Practice again by refreshing the Page.</p>
         </div>
 
-        <div class="alert alert-danger d-none" id="msgGameOver"
-        role="alert">
-           <h4 class="alert-heading">Sorry!!</h4>
-           <p>All your Lifelines got over. Better luck next time.</p>
-           <hr>
-           <p class="mb-0">You can Practice again by refreshing the Page.</p>
-   </div>
+        <div class="alert alert-danger d-none"
+             id="msgGameOver"
+             role="alert">
+                <h4 class="alert-heading">Sorry!!</h4>
+                <p>All your Lifelines got over. Better luck next time.</p>
+                <hr>
+                <p class="mb-0">You can Practice again by refreshing the Page.</p>
+        </div>
         <br />
         <!-- START: Training ARENA-->
         <div class="flex-container d-none"
@@ -127,25 +136,28 @@
                                                 <small id="emailHelp"
                                                        class="form-text text-muted">Type the word in the above textbox and press submit</small>
                                         </div>
-                                        <button id="submitAnswer"
-                                                class="btn btn-primary disabled"> Submit Answer </button>
+                                        <button type="button" id="submitAnswer"
+                                                class="btn btn-primary"> Submit Answer </button>
                                 </div>
 
                                 <br>
                                 <button type="button"
                                         class="btn btn-primary">
-                                        Current Score <span class="badge badge-light"
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                         Score <span class="badge badge-light"
                                               id="scoreCounter">0</span>
-                                        <span class="sr-only">unread messages</span>
+                                              
                                 </button>
                                 <button type="button"
                                         class="btn btn-warning">
-                                        Current Wrong Attempts <span class="badge badge-light"
+                                        <i class="fa fa-ban" aria-hidden="true"></i>
+                                        Wrong Attempts <span class="badge badge-light"
                                               id="currentWrongAttempts">0</span>
                                         <span class="sr-only">unread messages</span>
                                 </button>
                                 <button type="button"
                                         class="btn btn-danger">
+                                        <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                                         Total Wrong Attempts <span class="badge badge-light"
                                               id="wrongAttempts">0</span>
                                         <span class="sr-only">unread messages</span>
